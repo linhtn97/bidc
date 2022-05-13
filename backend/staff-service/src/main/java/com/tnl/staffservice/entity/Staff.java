@@ -29,15 +29,15 @@ public class Staff {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="dd/MM/yyyy")
     private Date dateOfBirth;
-    private String branchId;
-    private String departmentId;
-    private String positionId;
+    private Long branchId;
+    private Long departmentId;
+    private Long positionId;
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="dd/MM/yyyy")
     private Date joinDate;
     private Integer status;
 
-    public Staff(String code, String firstName, String lastName, Date dateOfBirth, String branchId, String departmentId, String positionId, Date joinDate, Integer status) {
+    public Staff(String code, String firstName, String lastName, Date dateOfBirth, Long branchId, Long departmentId, Long positionId, Date joinDate, Integer status) {
         this.code = code.trim();
         this.firstName = firstName;
         this.lastName = lastName;

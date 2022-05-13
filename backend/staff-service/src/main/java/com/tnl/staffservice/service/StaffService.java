@@ -2,6 +2,7 @@ package com.tnl.staffservice.service;
 
 import com.tnl.staffservice.api.model.RestAPIRequest;
 import com.tnl.staffservice.dto.FileDTO;
+import com.tnl.staffservice.dto.StaffReportDTO;
 import com.tnl.staffservice.dto.request.StaffFilter;
 import com.tnl.staffservice.entity.Staff;
 
@@ -12,6 +13,6 @@ public interface StaffService {
     List<Staff> getAll();
     Staff findById(String id);
     Staff updateOne(String id, RestAPIRequest<Staff> request);
-    List<Staff> searchByFilter(RestAPIRequest<StaffFilter> request);
+    List<StaffReportDTO> searchByFilter(RestAPIRequest<StaffFilter> request);
     FileDTO exportExcel(RestAPIRequest<StaffFilter> request);
 }

@@ -36,7 +36,7 @@ public class StaffController {
     }
 
     @PostMapping("/search-by-filter")
-    public RestAPIResponse<?> findByFilter(@RequestBody RestAPIRequest<StaffFilter> request){
+    public RestAPIResponse<?> searchByFilter(@RequestBody RestAPIRequest<StaffFilter> request){
         return APIUtil.buildResponse(staffService.searchByFilter(request));
     }
 
