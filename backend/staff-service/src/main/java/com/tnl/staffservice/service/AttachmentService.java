@@ -7,6 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface AttachmentService {
-    List<FileDTO> save(MultipartFile[] file);
+    List<FileDTO> saveAll(MultipartFile[] file);
     Attachment getById(String fileId);
 }

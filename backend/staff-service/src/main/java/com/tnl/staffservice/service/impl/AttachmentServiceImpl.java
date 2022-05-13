@@ -28,7 +28,7 @@ public class AttachmentServiceImpl implements AttachmentService{
 
     @Override
     @Transactional
-    public List<FileDTO> save(MultipartFile[] files) {
+    public List<FileDTO> saveAll(MultipartFile[] files) {
         try{
             List<FileDTO> fileResponses = new ArrayList<>();
             List<Attachment> attachments = new ArrayList<>();

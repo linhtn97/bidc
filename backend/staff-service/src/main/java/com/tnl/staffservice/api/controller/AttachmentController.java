@@ -21,7 +21,7 @@ public class AttachmentController {
 
     @PostMapping("/upload")
     public RestAPIResponse<?> upload(@RequestParam("files") MultipartFile[] files){
-        return APIUtil.buildResponse(attachmentService.save(files));
+        return APIUtil.buildResponse(attachmentService.saveAll(files));
     }
 
     @GetMapping("/download/{fileId}")
