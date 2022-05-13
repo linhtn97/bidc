@@ -19,4 +19,9 @@ public class BranchController {
     RestAPIResponse<?> findByCode(@RequestParam String code){
         return APIUtil.buildResponse(branchService.findByCode(code));
     }
+
+    @GetMapping("/get-all")
+    public RestAPIResponse<?> getAll(){
+        return APIUtil.buildResponse(branchService.getAll());
+    }
 }

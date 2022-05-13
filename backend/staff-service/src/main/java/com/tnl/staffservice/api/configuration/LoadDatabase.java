@@ -14,8 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.sql.Date;
-
+import java.util.Date;
 
 @Configuration
 class LoadDatabase {

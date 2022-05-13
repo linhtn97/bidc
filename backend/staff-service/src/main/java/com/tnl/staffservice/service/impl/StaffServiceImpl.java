@@ -2,10 +2,12 @@ package com.tnl.staffservice.service.impl;
 
 import com.tnl.staffservice.api.model.APIStatus;
 import com.tnl.staffservice.api.model.RestAPIRequest;
-import com.tnl.staffservice.dto.AttachmentDTO;
+import com.tnl.staffservice.entity.Attachment;
+import com.tnl.staffservice.dto.FileDTO;
 import com.tnl.staffservice.dto.request.StaffFilter;
 import com.tnl.staffservice.entity.Staff;
 import com.tnl.staffservice.exception.ApplicationException;
+import com.tnl.staffservice.repository.AttachmentRepository;
 import com.tnl.staffservice.repository.StaffRepository;
 import com.tnl.staffservice.service.StaffService;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +15,18 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +34,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StaffServiceImpl implements StaffService {
     private final StaffRepository staffRepository;
+    private final AttachmentRepository attachmentRepository;
 
     @Override
     public Staff createOne(RestAPIRequest<Staff> request) {
@@ -60,18 +73,56 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> searchByFilter(RestAPIRequest<StaffFilter> request) {
         try{
             StaffFilter staffFilter = request.getObjFil();
-            System.out.println(staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName()));
-            return staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName());
+
+            Date preDateOfBirth =null;
+            Date nextDateOfBirth=null;
+            if(staffFilter.getPreDateOfBirth() !=null && staffFilter.getNextDateOfBirth() !=null) {
+                preDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreDateOfBirth());
+                nextDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextDateOfBirth());
+            };
+
+            Date preJoinDate=null;
+            Date nextJoinDate=null;
+            if(staffFilter.getPreJoinDate() !=null && staffFilter.getNextJoinDate() !=null) {
+                preJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreJoinDate());
+                nextJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextJoinDate());
+            }
+
+            return staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),preDateOfBirth,nextDateOfBirth,preJoinDate,nextJoinDate);
         } catch (ApplicationException e){
             throw e;
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     @Override
-    public AttachmentDTO exportExcel(RestAPIRequest<StaffFilter> request) {
+    public FileDTO exportExcel(RestAPIRequest<StaffFilter> request) {
+        try {
         //GET DATA
         StaffFilter staffFilter = request.getObjFil();
-        List<Staff> staffs = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName());
+        Date preDateOfBirth =null;
+        Date nextDateOfBirth=null;
+        if(staffFilter.getPreDateOfBirth() !=null && staffFilter.getNextDateOfBirth() !=null) {
+            preDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreDateOfBirth());
+            nextDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextDateOfBirth());
+        };
+
+        Date preJoinDate=null;
+        Date nextJoinDate=null;
+        if(staffFilter.getPreJoinDate() !=null && staffFilter.getNextJoinDate() !=null) {
+            preJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreJoinDate());
+            nextJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextJoinDate());
+        }
+        List<Staff> staffs = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),preDateOfBirth,nextDateOfBirth,preJoinDate,nextJoinDate);
+        if(staffs.isEmpty()) throw new ApplicationException(APIStatus.NO_DATA_TO_EXPORT_FILE);
+
+        String fileName = "tempStaffs.xlsx";
+        Attachment attachment = new Attachment();
+        attachment.setFileType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        attachment.setFileName(fileName);
+        attachment = attachmentRepository.save(attachment);
 
         //PROCESS EXCEL
         Workbook workbook = new XSSFWorkbook();
@@ -80,7 +131,7 @@ public class StaffServiceImpl implements StaffService {
         sheet.setColumnWidth(0, 6000);
         sheet.setColumnWidth(1, 4000);
 
-        //First, we will create and style a header row that contains “Name” and “Age” cells:
+        //First, we will create and style a header row:
         Row header = sheet.createRow(0);
 
         CellStyle headerStyle = workbook.createCellStyle();
@@ -89,7 +140,7 @@ public class StaffServiceImpl implements StaffService {
 
         XSSFFont font = ((XSSFWorkbook) workbook).createFont();
         font.setFontName("Arial");
-        font.setFontHeightInPoints((short) 16);
+        font.setFontHeightInPoints((short) 12);
         font.setBold(true);
         headerStyle.setFont(font);
 
@@ -107,30 +158,89 @@ public class StaffServiceImpl implements StaffService {
         style.setWrapText(true);
 
         Row row;
-        for(int r =2; r < staffs.size();r++){
-            row = sheet.createRow(r);
-            //create row
+        int r = 1;
+        for(Staff staff:staffs){
+            row = sheet.createRow(r++);
+
             Cell cell;
-            for(int c = 0; c < headerColumnTitle.length;c++){
-                //create data column
-                cell = row.createCell(c);
-                cell.setCellValue("John Smith");
-                cell.setCellStyle(style);
-            }
+            cell = row.createCell(0);
+            cell.setCellValue(r-1);
+            cell.setCellStyle(style);
+
+            cell = row.createCell(1);
+            cell.setCellValue(staff.getCode());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(2);
+            cell.setCellValue(staff.getFirstName());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(3);
+            cell.setCellValue(staff.getLastName());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(4);
+            cell.setCellValue(staff.getDateOfBirth());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(5);
+            cell.setCellValue(staff.getBranchCode());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(6);
+            cell.setCellValue(staff.getDepartmentCode());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(7);
+            cell.setCellValue(staff.getPositionCode());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(8);
+            cell.setCellValue(staff.getJoinDate());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(9);
+            Integer status = staff.getStatus();
+            String statusName ="";
+            if(status == 1) statusName ="working";
+            if(status == 2) statusName ="has retired";
+            cell.setCellValue(statusName);
+            cell.setCellStyle(style);
         }
 
-        staffs.forEach(staff -> {
+        //Finally, let's write the content to a “temp.xlsx” file in the current directory and close the workbook:
+        String fileLocation = new File("src\\main\\resources\\static\\file").getAbsolutePath() + "\\" + attachment.getId()+".xlsx";
+        FileOutputStream outputStream = null;
+        outputStream = new FileOutputStream(fileLocation, false);
+        workbook.write(outputStream);
+        workbook.close();
+        //end export and save file static
 
-        });
+        Path path = Paths.get(fileLocation);
+        byte[] data = Files.readAllBytes(path);
+        FileDTO fileDTO = new FileDTO();
+        String downloadURL = "";
+        fileDTO.setFileName(attachment.getFileName());
+        fileDTO.setFileType(attachment.getFileType());
 
-//        //Finally, let's write the content to a “temp.xlsx” file in the current directory and close the workbook:
-//        File currDir = new File(".");
-//        String path = currDir.getAbsolutePath();
-//        String fileLocation = path.substring(0, path.length() - 1) + "temp.xlsx";
-//
-//        FileOutputStream outputStream = new FileOutputStream(fileLocation);
-//        workbook.write(outputStream);
-//        workbook.close();
+        downloadURL = ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("attachment/download/")
+                    .path(attachment.getId())
+                    .toUriString();
+        fileDTO.setDownloadURL(downloadURL);
+
+        return fileDTO;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ApplicationException e){
+            throw e;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

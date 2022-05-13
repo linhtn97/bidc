@@ -8,11 +8,9 @@ import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
+
 
 @Entity
 @Data
@@ -28,16 +26,19 @@ public class Staff {
     private String firstName;
     private String lastName;
     private String fullName;
-    @JsonFormat(pattern="yyyy-MM-dd")
+
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date dateOfBirth;
     private String branchCode;
     private String departmentCode;
     private String positionCode;
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date joinTime;
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="dd/MM/yyyy")
+    private Date joinDate;
     private Integer status;
 
-    public Staff(String id, String code, String firstName, String lastName, Date dateOfBirth, String branchCode, String departmentCode, String positionCode, Date joinTime, Integer status) {
+    public Staff(String id, String code, String firstName, String lastName, Date dateOfBirth, String branchCode, String departmentCode, String positionCode, Date joinDate, Integer status) {
         this.id = id;
         this.code = code;
         this.firstName = firstName;
@@ -47,7 +48,7 @@ public class Staff {
         this.branchCode = branchCode;
         this.departmentCode = departmentCode;
         this.positionCode = positionCode;
-        this.joinTime = joinTime;
+        this.joinDate = joinDate;
         this.status = status;
     }
 }

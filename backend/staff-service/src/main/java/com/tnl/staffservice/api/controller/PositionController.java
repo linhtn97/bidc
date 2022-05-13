@@ -17,4 +17,9 @@ public class PositionController {
     RestAPIResponse<?> findByCode(@RequestParam String code){
         return APIUtil.buildResponse(positionService.findByCode(code));
     }
+
+    @GetMapping("/get-all")
+    public RestAPIResponse<?> getAll(){
+        return APIUtil.buildResponse(positionService.getAll());
+    }
 }

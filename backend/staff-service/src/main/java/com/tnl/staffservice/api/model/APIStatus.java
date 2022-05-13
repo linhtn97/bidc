@@ -19,6 +19,8 @@ public enum APIStatus {
     POSITION_NOT_EXISTS(410,"Position not exists"),
     BRANCH_NOT_EXISTS(410,"Branch not exists"),
 
+    NO_DATA_TO_EXPORT_FILE(410,"No data to export file"),
+
     //default
     INTERNAL_SERVER(500, "Internal Service"),
     BAD_REQUEST(400, "Bad request parameters"),

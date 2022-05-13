@@ -19,4 +19,9 @@ public class DepartmentController {
     RestAPIResponse<?> findByCode(@RequestParam String code){
         return APIUtil.buildResponse(departmentService.findByCode(code));
     }
+
+    @GetMapping("/get-all")
+    public RestAPIResponse<?> getAll(){
+        return APIUtil.buildResponse(departmentService.getAll());
+    }
 }

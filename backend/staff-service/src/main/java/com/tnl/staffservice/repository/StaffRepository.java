@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,13 @@ import java.util.Optional;
 public interface StaffRepository extends JpaRepository<Staff,String> {
     Optional<Staff> findByCode(String code);
 
-    @Query("SELECT st FROM Staff st WHERE (:code is null or LOWER(st.code) like %:code%) and (:fullName is null or lower(st.fullName) like %:fullName%)")
-    List<Staff> searchByFilter(@Param("code") String code,@Param("fullName") String fullName);//
+    @Query("SELECT st FROM Staff st WHERE (:code is null or LOWER(st.code) like %:code%) and (:fullName is null or lower(st.fullName) like %:fullName%) and (:preDateOfBirth is null or st.dateOfBirth between :preDateOfBirth and :nextDateOfBirth) and (:preJoinDate is null or st.joinDate between :preJoinDate and :nextJoinDate)")
+    List<Staff> searchByFilter(
+            @Param("code") String code,
+            @Param("fullName") String fullName,
+            @Param("preDateOfBirth") Date preDateOfBirth,
+            @Param("nextDateOfBirth") Date nextDateOfBirth,
+            @Param("preJoinDate") Date preJoinDate,
+            @Param("nextJoinDate") Date nextJoinDate
+    );//
 }
