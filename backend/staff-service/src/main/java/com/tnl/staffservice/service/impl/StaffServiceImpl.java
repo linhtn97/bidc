@@ -55,9 +55,8 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> findByFilter(RestAPIRequest<StaffFilter> request) {
         try{
             StaffFilter staffFilter = request.getObjFil();
-            List<Staff> o = staffRepository.findByFilter(staffFilter.getCode(),staffFilter.getFullName());//
-            System.out.println(o);
-            return null;
+            System.out.println(staffRepository.findByFilter(staffFilter.getCode(),staffFilter.getFullName()));
+            return staffRepository.findByFilter(staffFilter.getCode(),staffFilter.getFullName());//;
         } catch (ApplicationException e){
             throw e;
         }

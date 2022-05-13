@@ -23,7 +23,7 @@ class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(StaffRepository repository) {
+    CommandLineRunner initDatabaseStaff(StaffRepository repository) {
 
         return args -> {
             log.info("Preloading " + repository.save(new Staff(null,"ST001","Linh","Tran",new Date(1997,04,15),0l,0l,0l,new Date(2022,01,01),1)));
@@ -33,32 +33,32 @@ class LoadDatabase {
         };
     }
 
-//    @Bean
-//    CommandLineRunner initDatabase(BranchRepository repository) {
-//
-//        return args -> {
-//            log.info("Preloading " + repository.save(new Branch(null,"BRANCH01","Headquarters",1)));
-//            log.info("Preloading " + repository.save(new Branch(null,"BRANCH02","Phnom Penh Branch",1)));
-//            log.info("Preloading " + repository.save(new Branch(null,"BRANCH03","Siem Reap Branch",1)));
-//        };
-//    }
-//
-//    @Bean
-//    CommandLineRunner initDatabase(DepartmentRepository repository) {
-//
-//        return args -> {
-//            log.info("Preloading " + repository.save(new Department(null,"DE01","CNTT",1)));
-//            log.info("Preloading " + repository.save(new Department(null,"DE02","Digital Bank",1)));
-//        };
-//    }
-//
-//    @Bean
-//    CommandLineRunner initDatabase(PositionRepository repository) {
-//
-//        return args -> {
-//            log.info("Preloading " + repository.save(new Position(null,"PO01","Officer",1)));
-//            log.info("Preloading " + repository.save(new Position(null,"PO02","Manager",1)));
-//            log.info("Preloading " + repository.save(new Position(null,"PO02","Branch Director",1)));
-//        };
-//    }
+    @Bean
+    CommandLineRunner initDatabaseBranch(BranchRepository repository) {
+
+        return args -> {
+            log.info("Preloading " + repository.save(new Branch(null,"BRANCH01","Headquarters",1)));
+            log.info("Preloading " + repository.save(new Branch(null,"BRANCH02","Phnom Penh Branch",1)));
+            log.info("Preloading " + repository.save(new Branch(null,"BRANCH03","Siem Reap Branch",1)));
+        };
+    }
+
+    @Bean
+    CommandLineRunner initDatabaseDepartment(DepartmentRepository repository) {
+
+        return args -> {
+            log.info("Preloading " + repository.save(new Department(null,"DE01","CNTT",1)));
+            log.info("Preloading " + repository.save(new Department(null,"DE02","Digital Bank",1)));
+        };
+    }
+
+    @Bean
+    CommandLineRunner initDatabasePosition(PositionRepository repository) {
+
+        return args -> {
+            log.info("Preloading " + repository.save(new Position(null,"PO01","Officer",1)));
+            log.info("Preloading " + repository.save(new Position(null,"PO02","Manager",1)));
+            log.info("Preloading " + repository.save(new Position(null,"PO02","Branch Director",1)));
+        };
+    }
 }
