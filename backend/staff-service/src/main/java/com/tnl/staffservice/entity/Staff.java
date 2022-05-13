@@ -30,23 +30,23 @@ public class Staff {
     private String fullName;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateOfBirth;
-    private Long unitId;
-    private Long departmentId;
-    private Long positionId;
+    private String branchCode;
+    private String departmentCode;
+    private String positionCode;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date joinTime;
     private Integer status;
 
-    public Staff(String id, String code, String firstName, String lastName, Date dateOfBirth, Long unitId, Long departmentId, Long positionId, Date joinTime, Integer status) {
+    public Staff(String id, String code, String firstName, String lastName, Date dateOfBirth, String branchCode, String departmentCode, String positionCode, Date joinTime, Integer status) {
         this.id = id;
         this.code = code;
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = firstName + " " + lastName;
         this.dateOfBirth = dateOfBirth;
-        this.unitId = unitId;
-        this.departmentId = departmentId;
-        this.positionId = positionId;
+        this.branchCode = branchCode;
+        this.departmentCode = departmentCode;
+        this.positionCode = positionCode;
         this.joinTime = joinTime;
         this.status = status;
     }

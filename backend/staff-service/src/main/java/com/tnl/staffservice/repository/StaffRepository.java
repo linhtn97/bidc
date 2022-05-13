@@ -14,5 +14,5 @@ public interface StaffRepository extends JpaRepository<Staff,String> {
     Optional<Staff> findByCode(String code);
 
     @Query("SELECT st FROM Staff st WHERE (:code is null or LOWER(st.code) like %:code%) and (:fullName is null or lower(st.fullName) like %:fullName%)")
-    List<Staff> findByFilter(@Param("code") String code,@Param("fullName") String fullName);//
+    List<Staff> searchByFilter(@Param("code") String code,@Param("fullName") String fullName);//
 }

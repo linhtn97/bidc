@@ -26,10 +26,10 @@ class LoadDatabase {
     CommandLineRunner initDatabaseStaff(StaffRepository repository) {
 
         return args -> {
-            log.info("Preloading " + repository.save(new Staff(null,"ST001","Linh","Tran",new Date(1997,04,15),0l,0l,0l,new Date(2022,01,01),1)));
-            log.info("Preloading " + repository.save(new Staff(null,"ST002","Quoc","Tran",new Date(1997,04,15),0l,0l,0l,new Date(2022,01,01),1)));
-            log.info("Preloading " + repository.save(new Staff(null,"ST003","Phuong","Nguyen",new Date(1997,04,15),0l,0l,0l,new Date(2022,01,01),1)));
-            log.info("Preloading " + repository.save(new Staff(null,"ST004","Trinh","Le",new Date(1997,04,15),0l,0l,0l,new Date(2022,01,01),1)));
+            log.info("Preloading " + repository.save(new Staff(null,"ST001","Linh","Tran",new Date(1997,04,15),"BR01","DE01","PO01",new Date(2022,01,01),1)));
+            log.info("Preloading " + repository.save(new Staff(null,"ST002","Quoc","Tran",new Date(1997,04,15),"BR01","DE01","PO01",new Date(2022,01,01),1)));
+            log.info("Preloading " + repository.save(new Staff(null,"ST003","Phuong","Nguyen",new Date(1997,04,15),"BR01","DE01","PO01",new Date(2022,01,01),1)));
+            log.info("Preloading " + repository.save(new Staff(null,"ST004","Trinh","Le",new Date(1997,04,15),"BR01","DE01","PO01",new Date(2022,01,01),1)));
         };
     }
 
@@ -37,9 +37,9 @@ class LoadDatabase {
     CommandLineRunner initDatabaseBranch(BranchRepository repository) {
 
         return args -> {
-            log.info("Preloading " + repository.save(new Branch(null,"BRANCH01","Headquarters",1)));
-            log.info("Preloading " + repository.save(new Branch(null,"BRANCH02","Phnom Penh Branch",1)));
-            log.info("Preloading " + repository.save(new Branch(null,"BRANCH03","Siem Reap Branch",1)));
+            log.info("Preloading " + repository.save(new Branch(null,"BR01","Headquarters",1)));
+            log.info("Preloading " + repository.save(new Branch(null,"BR02","Phnom Penh Branch",1)));
+            log.info("Preloading " + repository.save(new Branch(null,"BR03","Siem Reap Branch",1)));
         };
     }
 
