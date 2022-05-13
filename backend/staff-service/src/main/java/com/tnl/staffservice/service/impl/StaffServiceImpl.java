@@ -56,6 +56,17 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
+    public Staff findById(String id) {
+        try{
+            Optional<Staff> optionalStaff = staffRepository.findById(id);
+            if(optionalStaff.isEmpty()) throw new ApplicationException(APIStatus.STAFF_NOT_EXISTS);
+            return optionalStaff.get();
+        }catch (ApplicationException e){
+            throw e;
+        }
+    }
+
+    @Override
     public Staff updateOne(String id, RestAPIRequest<Staff> request) {
         try {
             Optional<Staff> temp = staffRepository.findById(id);
@@ -63,6 +74,7 @@ public class StaffServiceImpl implements StaffService {
             Staff updatedStaff = temp.get();
             updatedStaff = request.getObjFil();
             updatedStaff.setId(id);
+            updatedStaff.setFullName(updatedStaff.getFirstName()+" "+updatedStaff.getLastName());
             return staffRepository.save(updatedStaff);
         } catch (ApplicationException e){
             throw e;
@@ -128,8 +140,8 @@ public class StaffServiceImpl implements StaffService {
         Workbook workbook = new XSSFWorkbook();
 
         Sheet sheet = workbook.createSheet("Staffs");
-        sheet.setColumnWidth(0, 6000);
-        sheet.setColumnWidth(1, 4000);
+//        sheet.setColumnWidth(0, 6000);
+//        sheet.setColumnWidth(1, 4000);
 
         //First, we will create and style a header row:
         Row header = sheet.createRow(0);
@@ -184,15 +196,15 @@ public class StaffServiceImpl implements StaffService {
             cell.setCellStyle(style);
 
             cell = row.createCell(5);
-            cell.setCellValue(staff.getBranchCode());
+            cell.setCellValue(staff.getBranchId());
             cell.setCellStyle(style);
 
             cell = row.createCell(6);
-            cell.setCellValue(staff.getDepartmentCode());
+            cell.setCellValue(staff.getDepartmentId());
             cell.setCellStyle(style);
 
             cell = row.createCell(7);
-            cell.setCellValue(staff.getPositionCode());
+            cell.setCellValue(staff.getPositionId());
             cell.setCellStyle(style);
 
             cell = row.createCell(8);

@@ -25,7 +25,12 @@ public class StaffController {
         return APIUtil.buildResponse(staffService.getAll());
     }
 
-    @PutMapping("/update")
+    @GetMapping("/find-by")
+    RestAPIResponse<?> findByCode(@RequestParam String id){
+        return APIUtil.buildResponse(staffService.findById(id));
+    }
+
+    @PutMapping("/update-one")
     public RestAPIResponse<?> updateOne(@RequestParam String id,@RequestBody RestAPIRequest<Staff> request){
         return APIUtil.buildResponse(staffService.updateOne(id,request));
     }

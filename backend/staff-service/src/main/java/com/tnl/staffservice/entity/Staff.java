@@ -29,24 +29,23 @@ public class Staff {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="dd/MM/yyyy")
     private Date dateOfBirth;
-    private String branchCode;
-    private String departmentCode;
-    private String positionCode;
+    private String branchId;
+    private String departmentId;
+    private String positionId;
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="dd/MM/yyyy")
     private Date joinDate;
     private Integer status;
 
-    public Staff(String id, String code, String firstName, String lastName, Date dateOfBirth, String branchCode, String departmentCode, String positionCode, Date joinDate, Integer status) {
-        this.id = id;
-        this.code = code;
+    public Staff(String code, String firstName, String lastName, Date dateOfBirth, String branchId, String departmentId, String positionId, Date joinDate, Integer status) {
+        this.code = code.trim();
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = firstName + " " + lastName;
         this.dateOfBirth = dateOfBirth;
-        this.branchCode = branchCode;
-        this.departmentCode = departmentCode;
-        this.positionCode = positionCode;
+        this.branchId = branchId;
+        this.departmentId = departmentId;
+        this.positionId = positionId;
         this.joinDate = joinDate;
         this.status = status;
     }

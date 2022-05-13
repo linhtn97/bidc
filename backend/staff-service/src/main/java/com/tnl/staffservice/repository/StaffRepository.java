@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface StaffRepository extends JpaRepository<Staff,String> {
+    Optional<Staff> findById(String id);
     Optional<Staff> findByCode(String code);
 
     @Query("SELECT st FROM Staff st WHERE (:code is null or LOWER(st.code) like %:code%) and (:fullName is null or lower(st.fullName) like %:fullName%) and (:preDateOfBirth is null or st.dateOfBirth between :preDateOfBirth and :nextDateOfBirth) and (:preJoinDate is null or st.joinDate between :preJoinDate and :nextJoinDate)")
@@ -22,5 +23,5 @@ public interface StaffRepository extends JpaRepository<Staff,String> {
             @Param("nextDateOfBirth") Date nextDateOfBirth,
             @Param("preJoinDate") Date preJoinDate,
             @Param("nextJoinDate") Date nextJoinDate
-    );//
+    );
 }
