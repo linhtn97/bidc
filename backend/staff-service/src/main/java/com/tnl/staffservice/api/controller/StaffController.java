@@ -44,4 +44,9 @@ public class StaffController {
     public RestAPIResponse<?> exportExcel(@RequestBody RestAPIRequest<StaffFilter> request){
         return APIUtil.buildResponse(staffService.exportExcel(request));
     }
+
+    @DeleteMapping("/delete-one")
+    public RestAPIResponse<?> deleteOne(@RequestParam String id){
+        return APIUtil.buildResponse(staffService.deleteOne(id));
+    }
 }

@@ -3,7 +3,10 @@ package com.tnl.staffservice.repository;
 import com.tnl.staffservice.dto.StaffReportDTO;
 import com.tnl.staffservice.entity.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -31,6 +34,14 @@ public interface StaffRepository extends JpaRepository<Staff,String> {
             Date preDateOfBirth,
             Date nextDateOfBirth,
             Date preJoinDate,
-            Date nextJoinDate
+            Date nextJoinDate,
+            Integer status
     );
+
+    @Query("select case when count (st) > 0 then true else false END FROM Staff st WHERE st.id= :id and st.status = 1")
+    Boolean isStaffActive(@Param("id") String id);
+
+    @Modifying
+    @Query("update Staff st set st.status = 0 where st.id = :id")
+    void deleteOne(@Param(value = "id") String id);
 }

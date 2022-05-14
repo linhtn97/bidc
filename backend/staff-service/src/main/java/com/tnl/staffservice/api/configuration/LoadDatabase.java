@@ -14,6 +14,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Date;
 
 @Configuration
@@ -29,6 +32,14 @@ class LoadDatabase {
             log.info("Preloading " + repository.save(new Staff("ST002","Quoc","Tran",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
             log.info("Preloading " + repository.save(new Staff("ST003","Phuong","Nguyen",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
             log.info("Preloading " + repository.save(new Staff("ST004","Trinh","Le",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST005","Trang","Tran",new Date(1997-1900,12-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST006","Dung","Tran",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST007","Hong","Nguyen",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST008","Hue","Le",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST009","Trung","Tran",new Date(1997-1900,12-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST010","Tai","Tran",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST011","Lan","Nguyen",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST012","Diep","Le",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
         };
     }
 

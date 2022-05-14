@@ -103,7 +103,7 @@ public class StaffServiceImpl implements StaffService {
                 nextJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextJoinDate());
             }
             List<StaffReportDTO> staffReportDTOList = new ArrayList<>();
-            List<Object[]> reportData = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),preDateOfBirth,nextDateOfBirth,preJoinDate,nextJoinDate);
+            List<Object[]> reportData = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),preDateOfBirth,nextDateOfBirth,preJoinDate,nextJoinDate,staffFilter.getStatus());
             for(int i = 0; i< reportData.size();i++){
                 StaffReportDTO staffReportDTO = new StaffReportDTO(reportData.get(i)[0].toString(),reportData.get(i)[1].toString(),reportData.get(i)[2].toString(),reportData.get(i)[3].toString(),reportData.get(i)[4].toString(),reportData.get(i)[5].toString(),reportData.get(i)[6].toString(),reportData.get(i)[7].toString(),reportData.get(i)[8].toString(),reportData.get(i)[9].toString());
                 staffReportDTOList.add(staffReportDTO);
@@ -137,7 +137,7 @@ public class StaffServiceImpl implements StaffService {
             nextJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextJoinDate());
         }
         List<StaffReportDTO> staffReportDTOList = new ArrayList<>();
-        List<Object[]> reportData = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),preDateOfBirth,nextDateOfBirth,preJoinDate,nextJoinDate);
+        List<Object[]> reportData = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),preDateOfBirth,nextDateOfBirth,preJoinDate,nextJoinDate,staffFilter.getStatus());
         for(int i = 0; i< reportData.size();i++){
             StaffReportDTO staffReportDTO = new StaffReportDTO(reportData.get(i)[0].toString(),reportData.get(i)[1].toString(),reportData.get(i)[2].toString(),reportData.get(i)[3].toString(),reportData.get(i)[4].toString(),reportData.get(i)[5].toString(),reportData.get(i)[6].toString(),reportData.get(i)[7].toString(),reportData.get(i)[8].toString(),reportData.get(i)[9].toString());
             staffReportDTOList.add(staffReportDTO);
@@ -265,5 +265,17 @@ public class StaffServiceImpl implements StaffService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public Boolean deleteOne(String id) {
+        try{
+            Boolean isStaffActive = staffRepository.isStaffActive(id);
+            if(isStaffActive) {staffRepository.deleteOne(id);} else throw new ApplicationException(APIStatus.STAFF_NOT_EXISTS);
+            return true;
+        } catch (ApplicationException e){
+            throw e;
+        }
     }
 }

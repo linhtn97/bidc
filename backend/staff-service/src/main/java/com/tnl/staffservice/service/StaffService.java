@@ -15,4 +15,5 @@ public interface StaffService {
     Staff updateOne(String id, RestAPIRequest<Staff> request);
     List<StaffReportDTO> searchByFilter(RestAPIRequest<StaffFilter> request);
     FileDTO exportExcel(RestAPIRequest<StaffFilter> request);
+    Boolean deleteOne(String id);
 }

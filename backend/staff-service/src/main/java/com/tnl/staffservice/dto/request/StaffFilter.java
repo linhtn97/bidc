@@ -10,8 +10,9 @@ public class StaffFilter {
     String nextDateOfBirth;
     String preJoinDate;
     String nextJoinDate;
+    Integer status;
 
-    public StaffFilter(String code, String fullName, String preDateOfBirth, String nextDateOfBirth, String preJoinDate, String nextJoinDate) {
+    public StaffFilter(String code, String fullName, String preDateOfBirth, String nextDateOfBirth, String preJoinDate, String nextJoinDate,Integer status) {
         this.code = code;
         if (code != null) this.code = code.toLowerCase();
         this.fullName = fullName;
@@ -20,5 +21,6 @@ public class StaffFilter {
         this.nextDateOfBirth = nextDateOfBirth;
         this.preJoinDate = preJoinDate;
         this.nextJoinDate = nextJoinDate;
+        this.status = status;
     }
 }
