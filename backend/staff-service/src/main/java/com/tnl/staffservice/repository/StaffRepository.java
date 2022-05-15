@@ -31,10 +31,10 @@ public interface StaffRepository extends JpaRepository<Staff,String> {
     List<Object[]> searchByFilter(
             String code,
             String fullName,
-            Date preDateOfBirth,
-            Date nextDateOfBirth,
-            Date preJoinDate,
-            Date nextJoinDate,
+            String preDateOfBirth,
+            String nextDateOfBirth,
+            String preJoinDate,
+            String nextJoinDate,
             Integer status
     );
 
@@ -42,6 +42,6 @@ public interface StaffRepository extends JpaRepository<Staff,String> {
     Boolean isStaffActive(@Param("id") String id);
 
     @Modifying
-    @Query("update Staff st set st.status = 0 where st.id = :id")
+    @Query("update Staff st set st.status = -1 where st.id = :id")
     void deleteOne(@Param(value = "id") String id);
 }

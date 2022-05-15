@@ -63,7 +63,10 @@ class _MMenuItemState extends State<MMenuItem> {
                     ? {
                         _menuController.activeSubMenuItem.value = "",
                         _menuController.clickedMenuItem.value = "",
-                        _menuController.activeMenuItem.value = widget.pageRoute!
+                        _menuController.activeMenuItem.value =
+                            widget.pageRoute!,
+                        _menuController.activePageRoute.value =
+                            widget.pageRoute!
                       }
                     : {
                         _menuController.clickedMenuItem.value =
@@ -150,6 +153,11 @@ class _SubMenuItemState extends State<SubMenuItem> {
     return false;
   }
 
+  //   bool _isMenuItemClicked() {
+  //   if (_menuController.clickedMenuItem.value == widget.pageRoute!) return true;
+  //   return false;
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -158,6 +166,7 @@ class _SubMenuItemState extends State<SubMenuItem> {
           _menuController.activeMenuItem.value = widget.pageParentRoute!;
 
           _menuController.activeSubMenuItem.value = widget.pageRoute!;
+          _menuController.activePageRoute.value = widget.pageRoute!;
         },
         child: Row(
           children: [
@@ -201,6 +210,9 @@ const communityPageRoute = "communityPageRoute";
 const helpSupportPageRoute = "helpSupportPageRoute";
 const payPalPageRoute = "payPalPageRoute";
 const staffManagementPageRoute = "staffManagementPageRoute";
+const staffReportPageRoute = "staffReportPageRoute";
+const staffAddPageRoute = "staffAddPageRoute";
+const staffDetailPageRoute = "staffDetailPageRoute";
 
 Map menuItems = {
   "mainMenu": const [
@@ -213,44 +225,56 @@ Map menuItems = {
       icon: Icons.people_outline,
       labelName: "Staff Management",
       pageRoute: staffManagementPageRoute,
+      subMenuItems: [
+        SubMenuItem(
+          labelName: "Add",
+          pageRoute: staffAddPageRoute,
+          pageParentRoute: staffManagementPageRoute,
+        ),
+        SubMenuItem(
+          labelName: "Report",
+          pageRoute: staffReportPageRoute,
+          pageParentRoute: staffManagementPageRoute,
+        ),
+      ],
     ),
-    //   MMenuItem(
-    //     icon: Icons.home_outlined,
-    //     labelName: "Home",
-    //     pageRoute: homePageRoute,
-    //   ),
-    //   MMenuItem(
-    //     icon: Icons.currency_exchange_outlined,
-    //     labelName: "Exchange",
-    //     pageRoute: exchangePageRoute,
-    //   ),
-    //   MMenuItem(
-    //     icon: Icons.home_max_outlined,
-    //     labelName: "Stock & Fund",
-    //     pageRoute: stockFundPageRoute,
-    //     subMenuItems: [
-    //       SubMenuItem(
-    //         labelName: "Stock/ETF",
-    //         pageRoute: stockETFPageRoute,
-    //         pageParentRoute: stockFundPageRoute,
-    //       ),
-    //       SubMenuItem(
-    //         labelName: "Index",
-    //         pageRoute: indexPageRoute,
-    //         pageParentRoute: stockFundPageRoute,
-    //       ),
-    //       SubMenuItem(
-    //         labelName: "Currency",
-    //         pageRoute: currencyPageRoute,
-    //         pageParentRoute: stockFundPageRoute,
-    //       ),
-    //       SubMenuItem(
-    //         labelName: "Mutual Fund",
-    //         pageRoute: mutualFundPageRoute,
-    //         pageParentRoute: stockFundPageRoute,
-    //       ),
-    //     ],
-    //   ),
+    // MMenuItem(
+    //   icon: Icons.home_outlined,
+    //   labelName: "Home",
+    //   pageRoute: homePageRoute,
+    // ),
+    // MMenuItem(
+    //   icon: Icons.currency_exchange_outlined,
+    //   labelName: "Exchange",
+    //   pageRoute: exchangePageRoute,
+    // ),
+    // MMenuItem(
+    //   icon: Icons.home_max_outlined,
+    //   labelName: "Stock & Fund",
+    //   pageRoute: stockFundPageRoute,
+    //   subMenuItems: [
+    //     SubMenuItem(
+    //       labelName: "Stock/ETF",
+    //       pageRoute: stockETFPageRoute,
+    //       pageParentRoute: stockFundPageRoute,
+    //     ),
+    //     SubMenuItem(
+    //       labelName: "Index",
+    //       pageRoute: indexPageRoute,
+    //       pageParentRoute: stockFundPageRoute,
+    //     ),
+    //     SubMenuItem(
+    //       labelName: "Currency",
+    //       pageRoute: currencyPageRoute,
+    //       pageParentRoute: stockFundPageRoute,
+    //     ),
+    //     SubMenuItem(
+    //       labelName: "Mutual Fund",
+    //       pageRoute: mutualFundPageRoute,
+    //       pageParentRoute: stockFundPageRoute,
+    //     ),
+    //   ],
+    // ),
     //   MMenuItem(
     //     icon: Icons.wallet_giftcard_outlined,
     //     labelName: "Wallets",

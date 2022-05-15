@@ -16,4 +16,5 @@ public interface StaffService {
     List<StaffReportDTO> searchByFilter(RestAPIRequest<StaffFilter> request);
     FileDTO exportExcel(RestAPIRequest<StaffFilter> request);
     Boolean deleteOne(String id);
+    List getCreateFormInfo();
 }

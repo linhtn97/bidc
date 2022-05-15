@@ -27,13 +27,13 @@ public class Staff {
     private String fullName;
 
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="dd/MM/yyyy")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateOfBirth;
     private Long branchId;
     private Long departmentId;
     private Long positionId;
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="dd/MM/yyyy")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date joinDate;
     private Integer status;
 

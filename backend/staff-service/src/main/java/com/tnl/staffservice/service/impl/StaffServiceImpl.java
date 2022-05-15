@@ -11,6 +11,7 @@ import com.tnl.staffservice.exception.ApplicationException;
 import com.tnl.staffservice.repository.AttachmentRepository;
 import com.tnl.staffservice.repository.StaffRepository;
 import com.tnl.staffservice.service.StaffService;
+import com.tnl.staffservice.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -91,30 +92,27 @@ public class StaffServiceImpl implements StaffService {
 
             Date preDateOfBirth =null;
             Date nextDateOfBirth=null;
-            if(staffFilter.getPreDateOfBirth() !=null && staffFilter.getNextDateOfBirth() !=null) {
-                preDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreDateOfBirth());
-                nextDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextDateOfBirth());
-            };
-
-            Date preJoinDate=null;
-            Date nextJoinDate=null;
-            if(staffFilter.getPreJoinDate() !=null && staffFilter.getNextJoinDate() !=null) {
-                preJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreJoinDate());
-                nextJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextJoinDate());
-            }
+//            if(staffFilter.getPreDateOfBirth() !=null && staffFilter.getNextDateOfBirth() !=null) {
+//                preDateOfBirth=new SimpleDateFormat("dd-MM-yyyy").parse(staffFilter.getPreDateOfBirth());
+//                nextDateOfBirth=new SimpleDateFormat("dd-MM-yyyy").parse(staffFilter.getNextDateOfBirth());
+//            };
+//
+//            Date preJoinDate=null;
+//            Date nextJoinDate=null;
+//            if(staffFilter.getPreJoinDate() !=null && staffFilter.getNextJoinDate() !=null) {
+//                preJoinDate = new SimpleDateFormat("dd-MM-yyyy").parse(staffFilter.getPreJoinDate());
+//                nextJoinDate = new SimpleDateFormat("dd-MM-yyyy").parse(staffFilter.getNextJoinDate());
+//            }
             List<StaffReportDTO> staffReportDTOList = new ArrayList<>();
-            List<Object[]> reportData = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),preDateOfBirth,nextDateOfBirth,preJoinDate,nextJoinDate,staffFilter.getStatus());
+            List<Object[]> reportData = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),staffFilter.getPreDateOfBirth(),staffFilter.getNextDateOfBirth(),staffFilter.getPreJoinDate(),staffFilter.getNextJoinDate(),staffFilter.getStatus());
             for(int i = 0; i< reportData.size();i++){
-                StaffReportDTO staffReportDTO = new StaffReportDTO(reportData.get(i)[0].toString(),reportData.get(i)[1].toString(),reportData.get(i)[2].toString(),reportData.get(i)[3].toString(),reportData.get(i)[4].toString(),reportData.get(i)[5].toString(),reportData.get(i)[6].toString(),reportData.get(i)[7].toString(),reportData.get(i)[8].toString(),reportData.get(i)[9].toString());
+                StaffReportDTO staffReportDTO = new StaffReportDTO(reportData.get(i)[0].toString(),reportData.get(i)[1].toString(),reportData.get(i)[2].toString(),reportData.get(i)[3].toString(),StringUtils.toString(reportData.get(i)[4]),StringUtils.toString(reportData.get(i)[5]),reportData.get(i)[6].toString(),reportData.get(i)[7].toString(),reportData.get(i)[8].toString(),reportData.get(i)[9].toString());
                 staffReportDTOList.add(staffReportDTO);
             }
             return staffReportDTOList;
         } catch (ApplicationException e){
             throw e;
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
-        return null;
     }
 
     @Override
@@ -123,21 +121,21 @@ public class StaffServiceImpl implements StaffService {
         try {
         //GET DATA
         StaffFilter staffFilter = request.getObjFil();
-        Date preDateOfBirth =null;
-        Date nextDateOfBirth=null;
-        if(staffFilter.getPreDateOfBirth() !=null && staffFilter.getNextDateOfBirth() !=null) {
-            preDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreDateOfBirth());
-            nextDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextDateOfBirth());
-        };
-
-        Date preJoinDate=null;
-        Date nextJoinDate=null;
-        if(staffFilter.getPreJoinDate() !=null && staffFilter.getNextJoinDate() !=null) {
-            preJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreJoinDate());
-            nextJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextJoinDate());
-        }
+//        Date preDateOfBirth =null;
+//        Date nextDateOfBirth=null;
+//        if(staffFilter.getPreDateOfBirth() !=null && staffFilter.getNextDateOfBirth() !=null) {
+//            preDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreDateOfBirth());
+//            nextDateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextDateOfBirth());
+//        };
+//
+//        Date preJoinDate=null;
+//        Date nextJoinDate=null;
+//        if(staffFilter.getPreJoinDate() !=null && staffFilter.getNextJoinDate() !=null) {
+//            preJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getPreJoinDate());
+//            nextJoinDate = new SimpleDateFormat("dd/MM/yyyy").parse(staffFilter.getNextJoinDate());
+//        }
         List<StaffReportDTO> staffReportDTOList = new ArrayList<>();
-        List<Object[]> reportData = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),preDateOfBirth,nextDateOfBirth,preJoinDate,nextJoinDate,staffFilter.getStatus());
+        List<Object[]> reportData = staffRepository.searchByFilter(staffFilter.getCode(),staffFilter.getFullName(),staffFilter.getPreDateOfBirth(),staffFilter.getNextDateOfBirth(),staffFilter.getPreJoinDate(),staffFilter.getNextJoinDate(),staffFilter.getStatus());
         for(int i = 0; i< reportData.size();i++){
             StaffReportDTO staffReportDTO = new StaffReportDTO(reportData.get(i)[0].toString(),reportData.get(i)[1].toString(),reportData.get(i)[2].toString(),reportData.get(i)[3].toString(),reportData.get(i)[4].toString(),reportData.get(i)[5].toString(),reportData.get(i)[6].toString(),reportData.get(i)[7].toString(),reportData.get(i)[8].toString(),reportData.get(i)[9].toString());
             staffReportDTOList.add(staffReportDTO);
@@ -261,8 +259,6 @@ public class StaffServiceImpl implements StaffService {
             e.printStackTrace();
         } catch (ApplicationException e){
             throw e;
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -277,5 +273,10 @@ public class StaffServiceImpl implements StaffService {
         } catch (ApplicationException e){
             throw e;
         }
+    }
+
+    @Override
+    public List getCreateFormInfo() {
+        return null;
     }
 }

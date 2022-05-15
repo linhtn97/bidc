@@ -49,4 +49,9 @@ public class StaffController {
     public RestAPIResponse<?> deleteOne(@RequestParam String id){
         return APIUtil.buildResponse(staffService.deleteOne(id));
     }
+
+    @GetMapping("/get-create-form-info")
+    public RestAPIResponse<?> createFormInfo(){
+        return APIUtil.buildResponse(staffService.getCreateFormInfo());
+    }
 }
