@@ -14,7 +14,7 @@ class StaffManagement extends StatelessWidget {
         const PageTitle(title: "Staff Management"),
         sizedBoxHeightDefault(),
         //Table view
-        const StaffReport()
+        const StaffReport(),
       ],
     );
   }

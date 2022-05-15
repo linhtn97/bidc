@@ -11,18 +11,32 @@ class StaffService {
         // "Authorization": "Bearer " + token,
       };
 
-  Future<List<StaffReportDTO>> searchByFilter() async {
+  Future<List<StaffReportDTO>> searchByFilter(
+      String? code,
+      String? fullName,
+      String? preDateOfBirth,
+      String? nextDateOfBirth,
+      String? preJoinTime,
+      String? nextJoinTime,
+      int? status) async {
     var uri = "$baseUlr/search-by-filter";
+
+    if (code == "") code = null;
+    if (fullName == "") fullName = null;
+    if (preDateOfBirth == "") preDateOfBirth = null;
+    if (nextDateOfBirth == "") nextDateOfBirth = null;
+    if (preJoinTime == "") preJoinTime = null;
+    if (nextJoinTime == "") nextJoinTime = null;
 
     var body = jsonEncode(<dynamic, dynamic>{
       "objFil": {
-        "code": null,
-        "fullName": null,
-        "preDateOfBirth": null,
-        "nextDateOfBirth": null,
-        "preJoinTime": null,
-        "nextJoinTime": null,
-        "status": 1
+        "code": code,
+        "fullName": fullName,
+        "preDateOfBirth": preDateOfBirth,
+        "nextDateOfBirth": nextDateOfBirth,
+        "preJoinTime": preJoinTime,
+        "nextJoinTime": nextJoinTime,
+        "status": status
       }
     });
 
