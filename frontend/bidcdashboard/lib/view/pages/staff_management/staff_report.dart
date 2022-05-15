@@ -1,7 +1,6 @@
 import 'package:bidcdashboard/api/service/staff_service.dart';
 import 'package:bidcdashboard/view/constant/method.dart';
 import 'package:bidcdashboard/view/pages/staff_management/staff_report_controller.dart';
-import 'package:bidcdashboard/view/utils/m_datetime_format.dart';
 import 'package:bidcdashboard/view/widgets/container_custom.dart';
 import 'package:bidcdashboard/view/widgets/m_dropdown_button.dart';
 import 'package:bidcdashboard/view/widgets/m_input_textformfield.dart';
@@ -165,7 +164,6 @@ class _StaffReportTableViewState extends State<StaffReportTableView> {
                                           null,
                                           null,
                                           1);
-                                      ;
                                     },
                                     child: const Icon(Icons.replay_outlined),
                                   )
@@ -445,7 +443,6 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
                 const BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
             child: InkWell(
               onTap: () {
-                controller.reloadSearchStaffReport();
                 controller.fetchStaffReport(
                     null, null, null, null, null, null, 1);
               },

@@ -7,7 +7,6 @@ import 'package:bidcdashboard/view/widgets/m_input_textformfield.dart';
 import 'package:bidcdashboard/view/widgets/widget_default.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class CreateNewStaff extends StatelessWidget {
   const CreateNewStaff({Key? key}) : super(key: key);
@@ -191,18 +190,6 @@ class _CreateNewStaffFormState extends State<CreateNewStaffForm> {
                       width: 200,
                       child: ElevatedButton(
                           onPressed: () async {
-                            print({
-                              _codeTEC.text,
-                              _firstNameTEC.text,
-                              _lastNameTEC.text,
-                              _dateOfBirthPicker,
-                              _joinDatePicker,
-                              _statusDropdownValue,
-                              _branchDropdownValue,
-                              _departmentDropdownValue,
-                              _positionDropdownValue
-                            });
-
                             APIResponse result = await staffService.createOne(
                               _codeTEC.text,
                               _firstNameTEC.text,
@@ -215,9 +202,7 @@ class _CreateNewStaffFormState extends State<CreateNewStaffForm> {
                               _statusDropdownValue,
                             );
 
-                            if (result.status == 200) {
-                              print("fetch goood");
-                            }
+                            if (result.status == 200) {}
                           },
                           child: const Text("Create New !")),
                     )
