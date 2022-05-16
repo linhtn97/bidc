@@ -212,9 +212,8 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
                                     _joinDateTEC.text,
                                     _statusDropdownValue,
                                   );
-
                                   if (result.status == 200) {
-                                    staffReportController.reloadStaffReport();
+                                    // ignore: use_build_context_synchronously
                                     Navigator.pop(context, 'Cancel');
                                   }
                                 }

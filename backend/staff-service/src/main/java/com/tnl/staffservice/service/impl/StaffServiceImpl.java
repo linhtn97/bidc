@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -90,8 +91,8 @@ public class StaffServiceImpl implements StaffService {
         try{
             StaffFilter staffFilter = request.getObjFil();
 
-            Date preDateOfBirth =null;
-            Date nextDateOfBirth=null;
+//            Date preDateOfBirth =null;
+//            Date nextDateOfBirth=null;
 //            if(staffFilter.getPreDateOfBirth() !=null && staffFilter.getNextDateOfBirth() !=null) {
 //                preDateOfBirth=new SimpleDateFormat("dd-MM-yyyy").parse(staffFilter.getPreDateOfBirth());
 //                nextDateOfBirth=new SimpleDateFormat("dd-MM-yyyy").parse(staffFilter.getNextDateOfBirth());

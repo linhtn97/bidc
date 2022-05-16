@@ -1,6 +1,9 @@
 package com.tnl.staffservice.dto.request;
 
+import com.tnl.staffservice.api.model.APIStatus;
 import lombok.*;
+
+import javax.validation.constraints.NotNull;
 
 @Data
 @Getter

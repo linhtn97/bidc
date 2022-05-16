@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bidcdashboard/api/api_response.dart';
 import 'package:bidcdashboard/api/model/staff.dart';
 import 'package:bidcdashboard/api/service/staff_service.dart';
@@ -291,7 +289,7 @@ class _MRowDataState extends State<MRowData> {
                           height: 45,
                           child: InkWell(
                             onTap: () async {
-                              print("edit");
+                              // print("edit");
                               StaffService staffService = StaffService();
                               APIResponse result = await staffService
                                   .findById(widget.rowData[0]);
@@ -372,14 +370,15 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
   int _status = 1;
 
   void _launchUrl(String urlDownloadFile) async {
-    Uri _url = Uri.parse(urlDownloadFile);
-    if (!await launchUrl(_url)) throw 'Could not launch $_url';
+    Uri url = Uri.parse(urlDownloadFile);
+    if (!await launchUrl(url)) throw 'Could not launch $url';
   }
 
   StaffService staffService = StaffService();
 
   @override
   Widget build(BuildContext context) {
+    // print("_status $_status");
     DateTime now = DateTime.now();
     int yearNow = int.parse(DateFormat('yyyy').format(now));
     int monthNow = int.parse(DateFormat('MM').format(now));
@@ -556,7 +555,7 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
                 );
 
                 var res = apiResponse.data["downloadURL"];
-                print(res);
+                // print(res);
                 // js.context.callMethod(
                 //     'open', [url, '_self']); //<= find explanation below
                 String urlF = res.toString();
@@ -564,11 +563,14 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
               },
               child: Container(
                 padding: const EdgeInsets.all(10),
-                color: Colors.blue[50],
+                color: Colors.blue,
                 child: Row(
                   children: const [
-                    Text("Export Excel"),
                     Icon(Icons.download_outlined, color: Colors.white),
+                    SizedBox(width: 7),
+                    Text("Export Excel",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),

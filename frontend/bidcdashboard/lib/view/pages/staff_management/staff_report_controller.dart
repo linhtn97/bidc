@@ -41,14 +41,14 @@ class StaffReportController extends GetxController {
       arrString.add(futureGetStaffReport[i].position);
       staffReports.add(arrString);
     }
-    update(['staffReportId']);
+    // update(['staffReportId'], true);
   }
 
   reloadStaffReport() {
-    update(['staffReportId']);
+    // update(['staffReportId'], true);
   }
 
   reloadSearchStaffReport() {
-    update(['searchStaffReportId']);
+    // update(['searchStaffReportId'], true);
   }
 }

@@ -1,12 +1,13 @@
-import 'package:bidcdashboard/api/api_response.dart';
 import 'package:bidcdashboard/api/model/staff.dart';
 import 'package:bidcdashboard/api/service/staff_service.dart';
 import 'package:bidcdashboard/view/constant/method.dart';
+import 'package:bidcdashboard/view/pages/staff_management/staff_report_controller.dart';
 import 'package:bidcdashboard/view/widgets/container_custom.dart';
 import 'package:bidcdashboard/view/widgets/m_dropdown_button.dart';
 import 'package:bidcdashboard/view/widgets/m_input_textformfield.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class UpdateStaffForm extends StatefulWidget {
@@ -36,7 +37,8 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
   StaffService staffService = StaffService();
 
   void updateStaff() async {
-    APIResponse result = await staffService.updateOne(
+    // APIResponse result =
+    await staffService.updateOne(
       widget.staff.id,
       _codeTEC.text,
       _firstNameTEC.text,
@@ -65,6 +67,9 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
     _positionDropdownValue = widget.staff.positionId;
     super.initState();
   }
+
+  StaffReportController staffReportController =
+      Get.put(StaffReportController());
 
   @override
   Widget build(BuildContext context) {
