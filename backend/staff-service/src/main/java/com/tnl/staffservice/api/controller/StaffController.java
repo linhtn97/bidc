@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/staff")
 @RequiredArgsConstructor
 public class StaffController {
@@ -40,7 +41,7 @@ public class StaffController {
         return APIUtil.buildResponse(staffService.searchByFilter(request));
     }
 
-    @GetMapping("/export-excel")
+    @PostMapping("/export-excel")
     public RestAPIResponse<?> exportExcel(@RequestBody RestAPIRequest<StaffFilter> request){
         return APIUtil.buildResponse(staffService.exportExcel(request));
     }

@@ -55,8 +55,8 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
     _codeTEC.text = widget.staff.code;
     _firstNameTEC.text = widget.staff.firstName;
     _lastNameTEC.text = widget.staff.lastName;
-    _dateOfBirthTEC.text = widget.staff.dateOfBirth;
-    _joinDateTEC.text = widget.staff.joinDate;
+    _dateOfBirthTEC.text = widget.staff.dateOfBirth ?? "";
+    _joinDateTEC.text = widget.staff.joinDate ?? "";
 
     _statusDropdownValue = widget.staff.status;
     _branchDropdownValue = widget.staff.branchId;
@@ -73,13 +73,13 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
       width: 600,
       child: Form(
         key: _globalKeysStaffForm,
-        child: SizedBox(
-          height: 700,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SingleChildScrollView(
-                child: Column(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: 700,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
                   children: [
                     MInputTextFormField(
                       textEditingController: _codeTEC,
@@ -258,8 +258,8 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
                     )
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

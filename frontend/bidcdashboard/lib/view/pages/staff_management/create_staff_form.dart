@@ -37,15 +37,16 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
   Widget build(BuildContext context) {
     //Size sizeContext = MediaQuery.of(context).size;
     return ContainerCustom(
+      width: 600,
       child: Form(
         key: _globalKeysStaffForm,
-        child: SizedBox(
-          height: 700,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SingleChildScrollView(
-                child: Column(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: 700,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
                   children: [
                     MInputTextFormField(
                       textEditingController: _codeTEC,
@@ -157,8 +158,12 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
                     ),
                     MDropdownButton(
                       width: 280,
-                      dropdownValue: "Manager",
-                      listValue: const <String>["Manager", "Branch Director"],
+                      dropdownValue: "Officer",
+                      listValue: const <String>[
+                        "Officer",
+                        "Manager",
+                        "Branch Director"
+                      ],
                       onChanged: (String? newValue) {
                         switch (newValue) {
                           case "Manager":
@@ -194,7 +199,7 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
 
                                 if (result.status == 200) {}
                               },
-                              child: const Text("Create New !")),
+                              child: const Text("Add")),
                         ),
                         sizedBoxWidthDefault(),
                         SizedBox(
@@ -214,12 +219,20 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
                               },
                               child: const Text("Refresh")),
                         ),
+                        sizedBoxWidthDefault(),
+                        SizedBox(
+                          height: 40,
+                          width: 100,
+                          child: ElevatedButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text("Cancel")),
+                        ),
                       ],
                     )
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

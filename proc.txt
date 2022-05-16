@@ -29,5 +29,5 @@ BEGIN
 	and (staff_name is null or st.full_name like concat('%',staff_name,'%')) 
 	and ((pre_date_of_birth is null and next_date_of_birth is null) or (st.date_of_birth between str_to_date(pre_date_of_birth,'%Y-%m-%d')  and str_to_date(next_date_of_birth,'%Y-%m-%d')))
 	and ((pre_join_date is null and next_join_date is null) or (st.join_date between str_to_date(pre_join_date,'%Y-%m-%d')  and str_to_date(next_join_date,'%Y-%m-%d')))
-    and (staff_status = -1 or st.status = staff_status);
+    and (case when staff_status = -1 then st.status in (1,2) else st.status = staff_status end);
 END

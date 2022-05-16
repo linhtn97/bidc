@@ -1,8 +1,11 @@
 package com.tnl.staffservice.dto.request;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@Getter
+@Builder
+@NoArgsConstructor
 public class StaffFilter {
     String code;
     String fullName;

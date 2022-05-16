@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bidcdashboard/api/api_response.dart';
 import 'package:bidcdashboard/api/model/staff.dart';
 import 'package:bidcdashboard/api/service/staff_service.dart';
@@ -12,6 +14,8 @@ import 'package:bidcdashboard/view/widgets/widget_default.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:url_launcher/url_launcher.dart';
 
 class StaffReport extends StatefulWidget {
   const StaffReport({
@@ -173,20 +177,20 @@ class _StaffReportTableViewState extends State<StaffReportTableView> {
                                     },
                                     child: const Icon(Icons.note_add_outlined),
                                   ),
-                                  sizedBoxWidthDefault(),
-                                  InkWell(
-                                    onTap: () {
-                                      staffReportController.fetchStaffReport(
-                                          null,
-                                          null,
-                                          null,
-                                          null,
-                                          null,
-                                          null,
-                                          1);
-                                    },
-                                    child: const Icon(Icons.replay_outlined),
-                                  )
+                                  // sizedBoxWidthDefault(),
+                                  // InkWell(
+                                  //   onTap: () {
+                                  //     staffReportController.fetchStaffReport(
+                                  //         null,
+                                  //         null,
+                                  //         null,
+                                  //         null,
+                                  //         null,
+                                  //         null,
+                                  //         1);
+                                  //   },
+                                  //   child: const Icon(Icons.replay_outlined),
+                                  // )
                                 ],
                               ),
                             ),
@@ -353,13 +357,25 @@ class SearchStaffReport extends StatefulWidget {
 }
 
 class _SearchStaffReportState extends State<SearchStaffReport> {
-  TextEditingController codeTEC = TextEditingController();
-  TextEditingController nameTEC = TextEditingController();
-  String preDateOfBirth = "";
-  String nextDateOfBirth = "";
-  String preJoinDate = "";
-  String nextJoinDate = "";
-  int status = 1;
+  final TextEditingController _codeTEC = TextEditingController();
+  final TextEditingController _nameTEC = TextEditingController();
+  //
+  final TextEditingController _preDateOfBirthTEC = TextEditingController();
+  final TextEditingController _nextDateOfBirthTEC = TextEditingController();
+  final TextEditingController _prejoinDateTEC = TextEditingController();
+  final TextEditingController _nextjoinDateTEC = TextEditingController();
+  // String preDateOfBirth = "";
+  // String nextDateOfBirth = "";
+  // String preJoinDate = "";
+  // String nextJoinDate = "";
+  int _status = 1;
+
+  void _launchUrl(String urlDownloadFile) async {
+    Uri _url = Uri.parse(urlDownloadFile);
+    if (!await launchUrl(_url)) throw 'Could not launch $_url';
+  }
+
+  StaffService staffService = StaffService();
 
   @override
   Widget build(BuildContext context) {
@@ -368,13 +384,13 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
       builder: (controller) => Row(
         children: [
           MInputTextFormField(
-            textEditingController: codeTEC,
+            textEditingController: _codeTEC,
             labelText: "Search Code",
             width: 160,
           ),
           sizedBoxWidthDefault(),
           MInputTextFormField(
-            textEditingController: nameTEC,
+            textEditingController: _nameTEC,
             labelText: "Search Name",
             width: 160,
           ),
@@ -382,12 +398,12 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
           SizedBox(
             width: 160,
             child: DateTimePicker(
-              initialValue: '',
+              controller: _preDateOfBirthTEC,
               firstDate: DateTime(1900),
               lastDate: DateTime(2100),
               dateLabelText: 'Pre Date Of Birth',
               onChanged: (val) {
-                preDateOfBirth = val;
+                // preDateOfBirth = val;
               },
               validator: (val) {
                 return null;
@@ -399,12 +415,12 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
           SizedBox(
             width: 160,
             child: DateTimePicker(
-              initialValue: '',
+              controller: _nextDateOfBirthTEC,
               firstDate: DateTime(1900),
               lastDate: DateTime(2100),
               dateLabelText: 'Next Date Of Birth',
               onChanged: (val) {
-                nextDateOfBirth = val;
+                // nextDateOfBirth = val;
               },
               validator: (val) {
                 return null;
@@ -416,12 +432,12 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
           SizedBox(
             width: 160,
             child: DateTimePicker(
-              initialValue: '',
+              controller: _prejoinDateTEC,
               firstDate: DateTime(2000),
               lastDate: DateTime(2100),
               dateLabelText: 'Pre Join Date',
               onChanged: (val) {
-                preJoinDate = val;
+                // preJoinDate = val;
               },
               validator: (val) {
                 return null;
@@ -433,12 +449,12 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
           SizedBox(
             width: 160,
             child: DateTimePicker(
-              initialValue: '',
+              controller: _nextjoinDateTEC,
               firstDate: DateTime(2000),
               lastDate: DateTime(2100),
               dateLabelText: 'Next Join Date',
               onChanged: (val) {
-                nextJoinDate = val;
+                // nextJoinDate = val;
               },
               validator: (val) {
                 return null;
@@ -449,18 +465,24 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
           sizedBoxWidthDefault(),
           MDropdownButton(
             width: 100,
-            dropdownValue: 'Working',
+            dropdownValue: _status == -1
+                ? 'All'
+                : _status == 1
+                    ? 'Working'
+                    : _status == 2
+                        ? 'Has Retired'
+                        : null,
             listValue: const <String>['All', 'Working', 'Has Retired'],
             onChanged: (String? newValue) {
               switch (newValue) {
                 case 'All':
-                  status = -1;
+                  _status = -1;
                   break;
                 case 'Working':
-                  status = 1;
+                  _status = 1;
                   break;
                 case 'Has Retired':
-                  status = 2;
+                  _status = 2;
                   break;
               }
               return null;
@@ -473,13 +495,14 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
             child: InkWell(
               onTap: () {
                 controller.fetchStaffReport(
-                    codeTEC.text,
-                    nameTEC.text,
-                    preDateOfBirth,
-                    nextDateOfBirth,
-                    preJoinDate,
-                    nextJoinDate,
-                    status);
+                  _codeTEC.text,
+                  _nameTEC.text,
+                  _preDateOfBirthTEC.text,
+                  _nextDateOfBirthTEC.text,
+                  _prejoinDateTEC.text,
+                  _nextjoinDateTEC.text,
+                  _status,
+                );
               },
               child: Container(
                 padding: const EdgeInsets.all(7),
@@ -496,6 +519,15 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
               onTap: () {
                 controller.fetchStaffReport(
                     null, null, null, null, null, null, 1);
+                setState(() {
+                  _codeTEC.text = "";
+                  _nameTEC.text = "";
+                  _preDateOfBirthTEC.text = "";
+                  _nextDateOfBirthTEC.text = "";
+                  _prejoinDateTEC.text = "";
+                  _nextjoinDateTEC.text = "";
+                  _status = 1;
+                });
               },
               child: Container(
                 padding: const EdgeInsets.all(7),
@@ -508,8 +540,22 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
           SizedBox(
             child: InkWell(
               onTap: () async {
+                APIResponse apiResponse = await staffService.exportExcelReport(
+                  _codeTEC.text,
+                  _nameTEC.text,
+                  _preDateOfBirthTEC.text,
+                  _nextDateOfBirthTEC.text,
+                  _prejoinDateTEC.text,
+                  _nextjoinDateTEC.text,
+                  _status,
+                );
+
+                var res = apiResponse.data["downloadURL"];
+                print(res);
                 // js.context.callMethod(
                 //     'open', [url, '_self']); //<= find explanation below
+                String urlF = res.toString();
+                _launchUrl(urlF);
               },
               child: Container(
                 padding: const EdgeInsets.all(10),
