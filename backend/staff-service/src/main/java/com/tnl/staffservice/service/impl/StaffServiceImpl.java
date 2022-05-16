@@ -142,7 +142,7 @@ public class StaffServiceImpl implements StaffService {
         }
         if(staffReportDTOList.isEmpty()) throw new ApplicationException(APIStatus.NO_DATA_TO_EXPORT_FILE);
 
-        String fileName = "tempStaffs.xlsx";
+        String fileName = "staffReport.xlsx";
         Attachment attachment = new Attachment();
         attachment.setFileType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         attachment.setFileName(fileName);

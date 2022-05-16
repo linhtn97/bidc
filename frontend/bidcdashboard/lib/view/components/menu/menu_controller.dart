@@ -4,9 +4,9 @@ import 'package:bidcdashboard/view/components/menu/menu_item.dart';
 class MenuController extends GetxController {
   //static MenuController instance = Get.find();
 
-  var activePageRoute = homePageRoute.obs;
-  var activeMenuItem = homePageRoute.obs;
-  var activeSubMenuItem = "".obs;
+  var activePageRoute = staffReportPageRoute.obs;
+  var activeMenuItem = staffManagementPageRoute.obs;
+  var activeSubMenuItem = staffReportPageRoute.obs;
   var clickedMenuItem = "".obs;
 
   var hoverItem = "".toString().obs;

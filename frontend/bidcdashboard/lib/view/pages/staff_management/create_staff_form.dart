@@ -1,11 +1,14 @@
 import 'package:bidcdashboard/api/api_response.dart';
 import 'package:bidcdashboard/api/service/staff_service.dart';
 import 'package:bidcdashboard/view/constant/method.dart';
+import 'package:bidcdashboard/view/pages/staff_management/staff_report_controller.dart';
 import 'package:bidcdashboard/view/widgets/container_custom.dart';
 import 'package:bidcdashboard/view/widgets/m_dropdown_button.dart';
 import 'package:bidcdashboard/view/widgets/m_input_textformfield.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CreateStaffForm extends StatefulWidget {
   const CreateStaffForm({
@@ -32,9 +35,17 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
   int _departmentDropdownValue = 1;
   int _positionDropdownValue = 1;
   StaffService staffService = StaffService();
+  StaffReportController staffReportController =
+      Get.put(StaffReportController());
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    int yearNow = int.parse(DateFormat('yyyy').format(now));
+    int monthNow = int.parse(DateFormat('MM').format(now));
+    int dayNow = int.parse(DateFormat('dd').format(now));
+
+    // print("formatDate $yearNow - $monthNow -$dayNow ");
     //Size sizeContext = MediaQuery.of(context).size;
     return ContainerCustom(
       width: 600,
@@ -51,6 +62,9 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
                     MInputTextFormField(
                       textEditingController: _codeTEC,
                       labelText: "Code",
+                      validator: (val) => (val == null || val == "")
+                          ? 'Code must be not empty'
+                          : null,
                       width: 280,
                     ),
                     sizedBoxHeightDefault(),
@@ -71,7 +85,7 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
                       child: DateTimePicker(
                         controller: _dateOfBirthTEC,
                         firstDate: DateTime(1900),
-                        lastDate: DateTime(2100),
+                        lastDate: DateTime(yearNow, monthNow, dayNow),
                         dateLabelText: 'Date Of Birth',
                         onChanged: (val) {
                           // _dateOfBirthPicker = val;
@@ -184,20 +198,26 @@ class _CreateStaffFormState extends State<CreateStaffForm> {
                           width: 120,
                           child: ElevatedButton(
                               onPressed: () async {
-                                APIResponse result =
-                                    await staffService.createOne(
-                                  _codeTEC.text,
-                                  _firstNameTEC.text,
-                                  _lastNameTEC.text,
-                                  _dateOfBirthTEC.text,
-                                  _branchDropdownValue,
-                                  _departmentDropdownValue,
-                                  _positionDropdownValue,
-                                  _joinDateTEC.text,
-                                  _statusDropdownValue,
-                                );
+                                if (_globalKeysStaffForm.currentState!
+                                    .validate()) {
+                                  APIResponse result =
+                                      await staffService.createOne(
+                                    _codeTEC.text,
+                                    _firstNameTEC.text,
+                                    _lastNameTEC.text,
+                                    _dateOfBirthTEC.text,
+                                    _branchDropdownValue,
+                                    _departmentDropdownValue,
+                                    _positionDropdownValue,
+                                    _joinDateTEC.text,
+                                    _statusDropdownValue,
+                                  );
 
-                                if (result.status == 200) {}
+                                  if (result.status == 200) {
+                                    staffReportController.reloadStaffReport();
+                                    Navigator.pop(context, 'Cancel');
+                                  }
+                                }
                               },
                               child: const Text("Add")),
                         ),

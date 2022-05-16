@@ -14,6 +14,7 @@ import 'package:bidcdashboard/view/widgets/widget_default.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -379,6 +380,10 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    int yearNow = int.parse(DateFormat('yyyy').format(now));
+    int monthNow = int.parse(DateFormat('MM').format(now));
+    int dayNow = int.parse(DateFormat('dd').format(now));
     return GetBuilder<StaffReportController>(
       id: 'searchStaffReportId',
       builder: (controller) => Row(
@@ -400,7 +405,7 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
             child: DateTimePicker(
               controller: _preDateOfBirthTEC,
               firstDate: DateTime(1900),
-              lastDate: DateTime(2100),
+              lastDate: DateTime(yearNow, monthNow, dayNow),
               dateLabelText: 'Pre Date Of Birth',
               onChanged: (val) {
                 // preDateOfBirth = val;
@@ -417,7 +422,7 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
             child: DateTimePicker(
               controller: _nextDateOfBirthTEC,
               firstDate: DateTime(1900),
-              lastDate: DateTime(2100),
+              lastDate: DateTime(yearNow, monthNow, dayNow),
               dateLabelText: 'Next Date Of Birth',
               onChanged: (val) {
                 // nextDateOfBirth = val;

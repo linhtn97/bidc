@@ -7,6 +7,7 @@ import 'package:bidcdashboard/view/widgets/m_dropdown_button.dart';
 import 'package:bidcdashboard/view/widgets/m_input_textformfield.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class UpdateStaffForm extends StatefulWidget {
   const UpdateStaffForm({Key? key, required this.staff}) : super(key: key);
@@ -67,6 +68,10 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    int yearNow = int.parse(DateFormat('yyyy').format(now));
+    int monthNow = int.parse(DateFormat('MM').format(now));
+    int dayNow = int.parse(DateFormat('dd').format(now));
     // var result = staffService.
     //Size sizeContext = MediaQuery.of(context).size;
     return ContainerCustom(
@@ -84,6 +89,9 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
                     MInputTextFormField(
                       textEditingController: _codeTEC,
                       labelText: "Code",
+                      validator: (val) => (val == null || val == "")
+                          ? 'Code must be not empty'
+                          : null,
                       width: 280,
                     ),
                     sizedBoxHeightDefault(),
@@ -104,7 +112,7 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
                       child: DateTimePicker(
                         controller: _dateOfBirthTEC,
                         firstDate: DateTime(1900),
-                        lastDate: DateTime(2100),
+                        lastDate: DateTime(yearNow, monthNow, dayNow),
                         dateLabelText: 'Date Of Birth',
                         onChanged: (val) {
                           // _dateOfBirthPicker = val;
@@ -248,9 +256,12 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
                           width: 100,
                           child: ElevatedButton(
                               onPressed: () async {
-                                updateStaff();
-                                setState(() {});
-                                // if (result.status == 200) {}
+                                if (_globalKeysStaffForm.currentState!
+                                    .validate()) {
+                                  updateStaff();
+                                  setState(() {});
+                                  // if (result.status == 200) {}
+                                }
                               },
                               child: const Text("Update")),
                         ),

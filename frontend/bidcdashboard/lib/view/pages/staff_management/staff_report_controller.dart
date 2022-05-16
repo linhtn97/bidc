@@ -5,15 +5,6 @@ import 'package:get/get.dart';
 class StaffReportController extends GetxController {
   StaffService staffService = StaffService();
 
-  //static MenuController instance = Get.find();
-  // RxString code = "".obs;
-  // RxString fullName = "".obs;
-  // RxString preDateOfBirth = "".obs;
-  // RxString nextDateOfBirth = "".obs;
-  // RxString preJoinTime = "".obs;
-  // RxString nextJoinTime = "".obs;
-  // RxInt status = 1.obs;
-
   List<List<String>> staffReports = [
     [""]
   ].obs;
