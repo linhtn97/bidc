@@ -86,6 +86,30 @@ class StaffService {
     }
   }
 
+  Future<APIResponse> findById(String id) async {
+    var uri = "$baseUlr/find-by?id=$id";
+
+    try {
+      var response = await http.get(
+        Uri.parse(uri),
+        headers: headers,
+      );
+
+      var jsonResponseBody = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        APIResponse result = APIResponse.fromJson(jsonResponseBody);
+
+        return result;
+      } else {
+        return Future.error("Error Server: $jsonResponseBody");
+      }
+      // ignore: non_constant_identifier_names
+    } catch (SocketException) {
+      return Future.error("Error Fetching Data !");
+    }
+  }
+
   Future<APIResponse> createOne(
       String code,
       String firstName,
@@ -115,6 +139,55 @@ class StaffService {
 
     try {
       var response = await http.post(
+        Uri.parse(uri),
+        headers: headers,
+        body: body,
+      );
+
+      var jsonResponseBody = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        APIResponse result = APIResponse.fromJson(jsonResponseBody);
+
+        return result;
+      } else {
+        return Future.error("Error Server: $jsonResponseBody");
+      }
+      // ignore: non_constant_identifier_names
+    } catch (SocketException) {
+      return Future.error("Error Fetching Data !");
+    }
+  }
+
+  Future<APIResponse> updateOne(
+      String id,
+      String code,
+      String firstName,
+      String lastName,
+      dynamic dateOfBirth,
+      int branchId,
+      int departmentId,
+      int positionId,
+      dynamic joinDate,
+      int status) async {
+    var uri = "$baseUlr/update-one?id=$id";
+
+    var body = jsonEncode(<dynamic, dynamic>{
+      "objFil": {
+        "code": code,
+        "firstName": firstName,
+        "lastName": lastName,
+        "dateOfBirth": dateOfBirth,
+        "branchId": branchId,
+        "departmentId": departmentId,
+        "joinDate": joinDate,
+        "positionId": positionId,
+        "status": status
+      }
+    });
+
+    try {
+      var response = await http.put(
         Uri.parse(uri),
         headers: headers,
         body: body,

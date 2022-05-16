@@ -211,8 +211,6 @@ const helpSupportPageRoute = "helpSupportPageRoute";
 const payPalPageRoute = "payPalPageRoute";
 const staffManagementPageRoute = "staffManagementPageRoute";
 const staffReportPageRoute = "staffReportPageRoute";
-const staffAddPageRoute = "staffAddPageRoute";
-const staffDetailPageRoute = "staffDetailPageRoute";
 
 Map menuItems = {
   "mainMenu": const [
@@ -226,11 +224,6 @@ Map menuItems = {
       labelName: "Staff Management",
       pageRoute: staffManagementPageRoute,
       subMenuItems: [
-        SubMenuItem(
-          labelName: "Add",
-          pageRoute: staffAddPageRoute,
-          pageParentRoute: staffManagementPageRoute,
-        ),
         SubMenuItem(
           labelName: "Report",
           pageRoute: staffReportPageRoute,

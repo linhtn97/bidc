@@ -28,10 +28,10 @@ class LoadDatabase {
     CommandLineRunner initDatabaseStaff(StaffRepository repository) {
 
         return args -> {
-            log.info("Preloading " + repository.save(new Staff("ST001","Linh","Tran",new Date(1997-1900,12-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
-            log.info("Preloading " + repository.save(new Staff("ST002","Quoc","Tran",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
-            log.info("Preloading " + repository.save(new Staff("ST003","Phuong","Nguyen",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
-            log.info("Preloading " + repository.save(new Staff("ST004","Trinh","Le",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST001","Linh","Tran",new Date(1997-1900,12-1,15),1l,2l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST002","Quoc","Tran",new Date(1997-1900,04-1,15),2l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST003","Phuong","Nguyen",new Date(1997-1900,04-1,15),2l,1l,1l,new Date(2022-1900,01-1,01),1)));
+            log.info("Preloading " + repository.save(new Staff("ST004","Trinh","Le",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),2)));
             log.info("Preloading " + repository.save(new Staff("ST005","Trang","Tran",new Date(1997-1900,12-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
             log.info("Preloading " + repository.save(new Staff("ST006","Dung","Tran",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));
             log.info("Preloading " + repository.save(new Staff("ST007","Hong","Nguyen",new Date(1997-1900,04-1,15),1l,1l,1l,new Date(2022-1900,01-1,01),1)));

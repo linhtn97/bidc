@@ -3,7 +3,7 @@ class Staff {
   final String code;
   final String firstName;
   final String lastName;
-  // final String fullName;
+  // String? fullName;
   final dynamic dateOfBirth;
   final int branchId;
   final int departmentId;
@@ -16,7 +16,7 @@ class Staff {
       required this.code,
       required this.firstName,
       required this.lastName,
-      // required  this.fullName,
+      // this.fullName,
       required this.dateOfBirth,
       required this.branchId,
       required this.departmentId,
@@ -24,12 +24,13 @@ class Staff {
       required this.joinDate,
       required this.status});
 
-  factory Staff.fromJson(Map<String, dynamic> json) {
+  factory Staff.fromJson(Map<dynamic, dynamic> json) {
     return Staff(
       id: json['id'],
       code: json['code'],
       firstName: json['firstName'],
       lastName: json['lastName'],
+      // fullName: json['fullName'],
       dateOfBirth: json['dateOfBirth'],
       branchId: json['branchId'],
       departmentId: json['departmentId'],

@@ -12,11 +12,13 @@ class ContainerCustom extends StatelessWidget {
     this.margin,
     this.boxShadowColor,
     this.maxHeight,
+    this.maxWidth,
   }) : super(key: key);
 
   final double? width;
   final double? height;
   final double? maxHeight;
+  final double? maxWidth;
   final EdgeInsetsGeometry? margin;
 
   final Widget? child;
@@ -29,7 +31,10 @@ class ContainerCustom extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      constraints: BoxConstraints(maxHeight: maxHeight ?? double.infinity),
+      constraints: BoxConstraints(
+        maxHeight: maxHeight ?? double.infinity,
+        maxWidth: maxWidth ?? double.infinity,
+      ),
       padding: padding ?? const EdgeInsets.all(SizeConstant.defaultPadding),
       margin: margin,
       decoration: BoxDecoration(

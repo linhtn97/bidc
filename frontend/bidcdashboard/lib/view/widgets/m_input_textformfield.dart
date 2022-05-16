@@ -10,6 +10,7 @@ class MInputTextFormField extends StatelessWidget {
     this.width,
     this.height,
     this.maxWidth,
+    this.initialValue,
   }) : super(key: key);
 
   final TextEditingController? textEditingController;
@@ -19,6 +20,7 @@ class MInputTextFormField extends StatelessWidget {
   final double? width;
   final double? height;
   final double? maxWidth;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class MInputTextFormField extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: maxWidth ?? 380),
         child: TextFormField(
+          initialValue: initialValue,
           controller: textEditingController,
           validator: validator,
           decoration: InputDecoration(

@@ -2,7 +2,7 @@ class APIResponse {
   final int status;
   final String code;
   final String message;
-  final Object data;
+  final Map data;
 
   APIResponse({
     required this.status,

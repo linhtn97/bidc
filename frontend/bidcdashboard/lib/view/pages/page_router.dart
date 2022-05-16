@@ -1,5 +1,4 @@
 import 'package:bidcdashboard/view/components/menu/menu_item.dart';
-import 'package:bidcdashboard/view/pages/staff_management/create_new_staff.dart';
 import 'package:bidcdashboard/view/pages/staff_management/staff_report.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +17,6 @@ class PageRouter extends StatelessWidget {
     // }
     // return const SizedBox();
     switch (pageRoute) {
-      case staffAddPageRoute:
-        return const CreateNewStaff();
       case staffReportPageRoute:
         return const StaffReport();
       default:

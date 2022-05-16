@@ -1,6 +1,10 @@
+import 'package:bidcdashboard/api/api_response.dart';
+import 'package:bidcdashboard/api/model/staff.dart';
 import 'package:bidcdashboard/api/service/staff_service.dart';
 import 'package:bidcdashboard/view/constant/method.dart';
+import 'package:bidcdashboard/view/pages/staff_management/create_staff_form.dart';
 import 'package:bidcdashboard/view/pages/staff_management/staff_report_controller.dart';
+import 'package:bidcdashboard/view/pages/staff_management/update_staff_form.dart';
 import 'package:bidcdashboard/view/widgets/container_custom.dart';
 import 'package:bidcdashboard/view/widgets/m_dropdown_button.dart';
 import 'package:bidcdashboard/view/widgets/m_input_textformfield.dart';
@@ -111,6 +115,7 @@ class _StaffReportTableViewState extends State<StaffReportTableView> {
                   children: [
                     //Search filter
                     const SearchStaffReport(),
+                    sizedBoxHeightDefault(),
                     //header table
                     Container(
                       height: 40,
@@ -150,6 +155,21 @@ class _StaffReportTableViewState extends State<StaffReportTableView> {
                                   InkWell(
                                     onTap: () {
                                       // staffReportController.fetchStaffReport();
+                                      showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            const AlertDialog(
+                                          content: CreateStaffForm(),
+                                          // const Text('AlertDialog description'),
+                                          // actions: <Widget>[
+                                          //   TextButton(
+                                          //     onPressed: () =>
+                                          //         Navigator.pop(context, 'OK'),
+                                          //     child: const Text('OK'),
+                                          //   ),
+                                          // ],
+                                        ),
+                                      );
                                     },
                                     child: const Icon(Icons.note_add_outlined),
                                   ),
@@ -262,9 +282,39 @@ class _MRowDataState extends State<MRowData> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        InkWell(
-                          onTap: () {},
-                          child: const Icon(Icons.edit_note),
+                        SizedBox(
+                          height: 45,
+                          child: InkWell(
+                            onTap: () async {
+                              print("edit");
+                              StaffService staffService = StaffService();
+                              APIResponse result = await staffService
+                                  .findById(widget.rowData[0]);
+
+                              Map<dynamic, dynamic> a = result.data;
+
+                              Staff staffIndo = Staff.fromJson(a);
+
+                              showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Edit'),
+                                  content: UpdateStaffForm(staff: staffIndo),
+                                  // const Text('AlertDialog description'),
+                                  // actions: <Widget>[
+                                  //   TextButton(
+                                  //     onPressed: () =>
+                                  //         Navigator.pop(context, 'OK'),
+                                  //     child: const Text('OK'),
+                                  //   ),
+                                  // ],
+                                ),
+                              );
+
+                              // Staff.fromJson(result.data)
+                            },
+                            child: const Icon(Icons.edit_note_outlined),
+                          ),
                         ),
                         sizedBoxWidthDefault(),
                         SizedBox(
@@ -310,6 +360,7 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
   String preJoinDate = "";
   String nextJoinDate = "";
   int status = 1;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StaffReportController>(
@@ -450,6 +501,25 @@ class _SearchStaffReportState extends State<SearchStaffReport> {
                 padding: const EdgeInsets.all(7),
                 decoration: const BoxDecoration(shape: BoxShape.circle),
                 child: const Icon(Icons.refresh_outlined, color: Colors.white),
+              ),
+            ),
+          ),
+          sizedBoxWidthDefault(),
+          SizedBox(
+            child: InkWell(
+              onTap: () async {
+                // js.context.callMethod(
+                //     'open', [url, '_self']); //<= find explanation below
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                color: Colors.blue[50],
+                child: Row(
+                  children: const [
+                    Text("Export Excel"),
+                    Icon(Icons.download_outlined, color: Colors.white),
+                  ],
+                ),
               ),
             ),
           )
