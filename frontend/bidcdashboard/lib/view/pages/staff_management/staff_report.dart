@@ -40,18 +40,18 @@ class _StaffReportState extends State<StaffReport> {
   ];
   List<double> sizeColumnWidth = [
     50,
-    200,
-    200,
-    200,
-    200,
-    200,
-    200,
-    200,
-    200,
-    200,
-    200,
-    200,
-    200
+    140,
+    160,
+    160,
+    160,
+    160,
+    160,
+    160,
+    160,
+    160,
+    160,
+    160,
+    120
   ];
   StaffReportController staffReportController =
       Get.put(StaffReportController());

@@ -54,7 +54,6 @@ class _UpdateStaffFormState extends State<UpdateStaffForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _codeTEC.text = widget.staff.code;
     _firstNameTEC.text = widget.staff.firstName;
     _lastNameTEC.text = widget.staff.lastName;
