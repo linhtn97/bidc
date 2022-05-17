@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.tnl'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = "11"
+sourceCompatibility = '17'
 
 configurations {
 	compileOnly {
@@ -28,10 +28,8 @@ dependencies {
 	implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.0'
 	implementation group: 'org.apache.poi', name: 'poi', version: '5.2.0'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.7'
-
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
-targetCompatibility = JavaVersion.VERSION_11
